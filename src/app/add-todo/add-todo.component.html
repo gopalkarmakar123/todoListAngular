@@ -1,0 +1,53 @@
+
+
+<main fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20" >
+  <div  fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-card fxLayout="column" fxLayoutAlign="start stretch" >
+      <mat-card-header>
+        <mat-card-title>Add New Todo</mat-card-title>
+        <mat-card-subtitle>Enter your task to do.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+        <mat-form-field appearance="standard" >
+          <input matInput placeholder="What to do?" #TodoTitle [(ngModel)]="formValue.title">
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions  fxLayout="row" fxLayoutAlign="end stretch">
+          <button mat-raised-button color="primary" (click)="addTodo();"> Add to do list</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div  fxLayout="row" fxFlex="1" fxLayoutGap="20px"  fxLayoutAlign="space-between stretch">
+    <mat-card fxFlex="1 0" fxLayout="column" fxLayoutAlign="start stretch" >
+      <mat-card-header>
+        <mat-card-title>Todo List</mat-card-title>
+        <mat-card-subtitle>Shows Pending todo list here.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+        <mat-selection-list  cdkDropList #todoList="cdkDropList" [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="[doneList]" (cdkDropListDropped)="drop($event)" >
+          <mat-list-option  *ngFor="let todo of todos; index as i; "  selected="{{todo.selected}}" cdkDrag [cdkDragDisabled]="todo.selected">
+            <div fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="20px" mat-line><mat-icon aria-hidden="false" aria-label="Example home icon" cdkDragHandle>drag_indicator</mat-icon> {{i+1}} . {{todo.title}}</div>
+            <span *cdkDragPreview>{{todo.title}}</span>
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-card-content>
+
+    </mat-card>
+    <mat-card fxFlex="1 0" fxLayout="column" fxLayoutAlign="start stretch" >
+      <mat-card-header>
+        <mat-card-title>Selected Todo List</mat-card-title>
+        <mat-card-subtitle>Shows marked todo list here.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" fxFill>
+        <mat-list cdkDropList #doneList="cdkDropList" [cdkDropListData]="selectedTodos"
+        [cdkDropListConnectedTo]="[todoList]" (cdkDropListDropped)="drop($event)" >
+          <mat-list-item  *ngFor="let todo of selectedTodos ; index as i; ">
+            {{i+1}} . {{todo.title}}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</main>
+
