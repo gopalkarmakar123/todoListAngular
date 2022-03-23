@@ -24,7 +24,7 @@ export class AddTodoComponent implements OnInit {
         });
 
       });
-      console.log(this.selectedTodos);
+      // console.log(this.selectedTodos);
 
 
   }
